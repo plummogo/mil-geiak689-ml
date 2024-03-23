@@ -1,5 +1,5 @@
 function generateMapping(key) {
-    const abc = 'abcdefghijklmnopqrstuvwxyz'.split('');
+    const abc = 'abcdefghijklmnopqrstuvwxyz'.split('');    
     const shuffled = abc.slice();
 
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -28,14 +28,40 @@ function decrypt(text, key) {
     return text.split('').map(char => invCharMap[char] || char).join('');
 }
 
+function hack(text) {
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    let decryptedTexts = [];
+
+    for (let shift = 1; shift < alphabet.length; shift++) {
+        let decryptedText = text.split('').map(char => {
+            if (char.match(/[a-z]/i)) {
+                const isUpperCase = char === char.toUpperCase();
+                char = char.toLowerCase();
+                
+                const currentIndex = alphabet.indexOf(char);
+                let newIndex = (currentIndex - shift) % 26;
+                if (newIndex < 0) newIndex += 26;
+                
+                char = alphabet[newIndex];
+                return isUpperCase ? char.toUpperCase() : char;
+            }
+            return char;
+        }).join('');
+        
+        decryptedTexts.push(decryptedText);
+        console.log(`Shift ${shift}: ${decryptedText}`);
+    }
+
+    return decryptedTexts;
+}
+
 /*
-    Teszt
+    // TESZTELÉS
+    
+    const text = 'szilva';
     const key = 123;
-    const originalText = "hello world";
 
-    const encryptedText = encrypt(originalText, key);
-    console.log(`Encrypted: ${encryptedText}`);
-
-    const decryptedText = decrypt(encryptedText, key);
-    console.log(`Decrypted: ${decryptedText}`);
+    encrypt(text, key);
+    decrypt(ciphertext);
+    hack('upcbja');
 */
