@@ -1,48 +1,58 @@
 from PIL import Image
 
-def hide_text(image_path, text, output_path):
-    image = Image.open(image_path)
-    image = image.convert("RGB")
-    binary_text = ''.join(format(ord(char), '08b') for char in text)
+DELIMITER = '1111111111111110'
+
+def encode(image_path, text, output_path):
+    img = Image.open(image_path)
+    width, height = img.size
+
+    binary_text = ''.join(format(ord(t), '08b') for t in text)
     text_length = len(binary_text)
-    
-    if text_length > image.width * image.height * 3:
+
+    if text_length > width * height * 3:
         print("Error: Kép méret túl kicsi hogy elrejtesem a szöveget:", text)
-        return
-    
-    pixel_index = 0
-    for char in binary_text:
-        x = pixel_index % image.width
-        y = pixel_index // image.width
-        r, g, b = image.getpixel((x, y))
-        new_r = r & 0xFE | int(char)
-        image.putpixel((x, y), (new_r, g, b))
-        pixel_index += 1
-    
-    image.save(output_path)
 
-def extract_text(image_path):
-    image = Image.open(image_path)
+    binary_text += DELIMITER
+    data_index = 0
+    for y in range(height):
+        for x in range(width):
+            pixel = img.getpixel((x, y))
+            for i in range(3):
+                if data_index < text_length:
+                    bit = int(binary_text[data_index])
+                    pixel = set_bit(pixel, i, bit)
+                    data_index += 1
+            img.putpixel((x, y), pixel)
+
+    img.save(output_path)
+
+def set_bit(value, bit_index, bit):
+    if bit:
+        return value | (1 << bit_index)
+    else:
+        return value & ~(1 << bit_index)
+
+def decode(image_path, delimiter = '11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111110'):
+    img = Image.open(image_path)
+    width, height = img.size
     binary_text = ''
-    for y in range(image.height):
-        for x in range(image.width):
-            pixel = image.getpixel((x, y))
-            binary_text += bin(pixel[0])[-1]
-            binary_text += bin(pixel[1])[-1]
-            binary_text += bin(pixel[2])[-1]
-    text = ''
-    for i in range(0, len(binary_text), 8):
-        text += chr(int(binary_text[i:i+8], 2))
-        if text.endswith('\x00'):
-            break
-    return text.rstrip('\x00')
+    for y in range(height):
+        for x in range(width):
+            pixel = img.getpixel((x, y))
+            for i in range(3):
+                bit = pixel & 1
+                binary_text += str(bit)
+                if binary_text[-len(delimiter):] == delimiter:
+                    return ''.join(chr(int(binary_text[i:i+8], 2)) for i in range(0, len(binary_text)-len(delimiter), 8))
+                pixel >>= 1
+    return None
 
-input_path = "input.bmp"
-text = "Teszt"
-output_path = "output.bmp"
+image_path = 'input.bmp'
+output_path = 'output.bmp'
+text = 'Rejts el'
 
-hide_text(input_path, text, output_path)
+encode(image_path, text, output_path)
 print("Elrejtettem a szöveget.")
 
-extracted_text = extract_text(output_path)
-print("Kinyert szöveg:", extracted_text)
+decoded_text = decode(output_path)
+print("Visszafejtett elrejtett szöveg:", decoded_text)
