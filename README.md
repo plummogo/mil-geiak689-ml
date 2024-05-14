@@ -1,74 +1,89 @@
-#   Szoftverrendszerek biztonsága (mil-geiakK689-ml) - Caesar-kód gyakorlati feladat
+1. Határozza meg a számítógépes biztonság fogalmát
+A számítógépes biztonság fogalma az a tevékenység, folyamat vagy állapot, amely a számítógépek, hálózatok és az azokon tárolt adatok védelmére irányul. Célja, hogy megóvja ezeket az eszközöket és információkat illetéktelen hozzáféréstől, változtatástól vagy megsemmisítéstől.
 
-## Gyakorlati feladat ismertetése
-A Caesar-kód vagy Caesar-rejtjel az egyik legegyszerűbb és legelterjedtebb titkosírási módszer. Ez egy helyettesítő rejtjel, ami azt jelenti, hogy minden egyes betűt az ábécében egy tőle meghatározott távolságra lévő betűvel kell helyettesíteni. Így például, ha mondjuk az eltolódás 3, az angol ábécében az A-t a D-vel, a B-t az E-vel stb. kell helyettesíteni. A magyar ábécére vonatkoztatva ez az A betű helyett C-t, az Á betű helyett CS-t jelent. Az elnevezését Julius Caesar után kapta, aki ennek a segítségével kommunikált tábornokaival. [^1]
+2. Ismertesse a titoktartást, az integritást és a rendelkezésre állást
+- Titoktartás: Az információkhoz való hozzáférés korlátozása annak biztosítása érdekében, hogy csak az arra jogosult felhasználók érhessék el azokat.
+- Integritás: Az adatok megbízhatóságának és pontosságának biztosítása. Az adatok integritásának megőrzése azt jelenti, hogy azok nem módosulhatnak illetéktelenül vagy hibásan.
+- Rendelkezésre állás: Az adatok és szolgáltatások folyamatos elérhetőségének biztosítása, hogy azok rendeltetésszerűen használhatók legyenek, és ne legyenek elérhetetlenek vagy leállítva.
 
+3. Melyek a számítógépes biztonság kihívásai?
+- Fejlődő fenyegetések: Az új technológiák megjelenésével és a számítástechnikai környezet változásával új kockázatok jelennek meg.
+- Humán tényezők: Az emberi hibák vagy rosszindulatú szándékú tevékenységek (például kártékony programok letöltése, gyenge jelszavak használata stb.) jelentős biztonsági kockázatot jelenthetnek.
+- Növekvő adatmennyiség: Az adatok egyre növekvő mennyisége és azok sokfélesége megnehezítheti azok hatékony védelmét és kezelését.
+- Szabályozási követelmények: A jogszabályok és iparági előírások változása kihívást jelenthet a szervezetek számára a megfelelés és a biztonság fenntartása terén.
+   
+4. Ismertesse meg a számítógépes támadás típusait
+- Vírusok és férgek: Ezek a kártékony programok más programokba ágyazva vagy önállóan terjedve fertőzik meg a számítógépeket, és kárt okozhatnak az adatokban vagy a rendszerben.
+- Phishing és csalás: Olyan módszerek, amelyekkel az elkövetők megtévesztik az embereket, hogy érzékeny információkat (pl. jelszavakat, banki adatokat stb.) adjanak meg.
+- DDoS támadások: Az elkövetők ebben az esetben túlterhelik egy webhely vagy hálózat szervereit, hogy azok ne legyenek elérhetők a valódi felhasználók számára.
+- Adathalászat: Az elkövetők hamis weboldalakat, e-maileket vagy egyéb kommunikációs eszközöket használnak arra, hogy felhasználókat csalogassanak, és érzékeny információkat adjanak meg.
+- Károkozás és megzsarolás: Az elkövetők célja az, hogy kárt okozzanak vagy pénzt szedjenek az áldozatoktól, például adatok titkosításával és váltságdíjat követelve.
 
-## Kódolás
+5. Fenyegetések, támadások és eszközök meghatározása
+- Fenyegetés: Olyan körülmény vagy potenciális esemény, amely veszélyezteti a számítógépes rendszerek vagy adatok biztonságát és integritását.
+- Támadás: Az az esemény, amikor valaki vagy valami megpróbálja megzavarni, megszerezni vagy károsítani a számítógépes rendszereket vagy adatokat.
+- Eszköz: Olyan eszközök vagy módszerek, amelyeket az elkövetők használnak a számítógépes rendszerek megtámadására vagy veszélyeztetésére, például kártékony programok, hackertámadások stb.
 
-A titkosítás két ábécével megvalósítható úgy, hogy az egyiket a másik alá írva 'n' betűhellyel eltoljuk.
+6. Magyarázza el a biztonsági követelményeket
+A biztonsági követelmények olyan specifikációk és elvárások, amelyeket egy számítógépes rendszer, hálózat vagy alkalmazás tervezésekor vagy üzemeltetésekor figyelembe kell venni annak érdekében, hogy megfelelő szintű biztonságot biztosítsanak. Ezek a követelmények lehetnek funkcionálisak (amelyek meghatározzák, hogy mit kell megvalósítani a biztonsági szempontból) és nem-funkcionálisak (például teljesítmény, skálázhatóság stb.).
 
-### Karakter abc és mappelés beállítása
-```generateMapping(key)```függvény egy karakter leképezést hoz létre, ahol minden betűt egy másik betűre cserél. Lépések:
+7. Ismertesse az alapvető biztonsági tervezési elveket
+- Legkisebb jogosultság elve: Minden felhasználónak csak azokat a jogosultságokat kell biztosítani, amelyek elengedhetetlenek a munkájukhoz.
+- Elválasztás elve: A rendszereknek és az adatoknak egymástól függetlenül kell működniük és tárolódniuk.
+- Biztonság alapelveinek az alapján történő tervezés: A biztonsági funkciókat és mechanizmusokat már a rendszer tervezésekor figyelembe kell venni.
+- Rendszeres felülvizsgálat és felügyelet: Rendszeresen ellenőrizni kell a biztonsági intézkedéseket, és azokat naprakészen kell tartani.
+- Teljesség elve: A rendszernek teljesnek és kimerítőnek kell lennie a biztonsági szempontból.
 
-1. Létrehoz egy angol abc tömböt.
-2. Lemásolja az abc tömböt egy ```shuffled``` változóba, ez lesz ahol megkeveri a következő lépésben.
-3. A shuffled tömb elemeit keveri (megzavarja) az alábbi módon:
-    - Végigmegy a tömbön hátulról előre.
-    - Minden iterációban kiszámít egy pseudoRandom értéket a megadott key és az iteráció jelenlegi indexe alapján, amit egy modulo művelettel korlátoz a tömb hosszára, hogy biztosan a tömb indexein belül maradjon
-    - Megcseréli a jelenlegi elemet (shuffled[i]) a pseudoRandom indexű elemmel a shuffled tömbön belül.
-    - Létrehoz egy új objektumot (acc), ahol az eredeti ábécé minden betűjét (abc) hozzárendeli a megzavart ábécé egy-egy betűjéhez (shuffled), tehát lényegében egy leképezést hoz létre az eredeti és a megzavart ábécé között
-    - Visszatér az elkészült leképezéssel
+8. Ismertesse a számítógépes biztonsági stratégiákat
+- Tűzfalak és határvédelem: A hálózatok és rendszerek védelmére szolgáló eszközök és szoftverek felhasználása.
+- Hitelesítés és hozzáférési ellenőrzés: Azonosítás és hitelesítési mechanizmusok alkalmazása annak érdekében, hogy csak az arra jogosult felhasználók férjenek hozzá az adatokhoz és szolgáltatásokhoz.
+- Titkosítás: Az adatok védelme titkosítással, hogy azok ne legyenek olvashatók az illetéktelen személyek számára.
+- Rendszeres biztonsági mentések: Az adatok rendszeres biztonsági mentése, hogy azokat vészhelyzet esetén vissza lehessen állítani.
 
-### Kódolás
+9. Határozza meg a kriptográfiai algoritmusok alapfogalmait: egyszerű szöveg, titkosítási algoritmus, titkos kulcs, titkosított szöveg, visszafejtő algoritmus
+- Egyszerű szöveg: Az eredeti, olvasható szöveg, amelyet titkosítani kívánunk.
+- Titkosítási algoritmus: Matematikai módszer vagy eljárás, amelyet az egyszerű szöveg titkosítására használnak.
+- Titkos kulcs: A titkosítási algoritmus használatához szükséges adat, amelyet csak az engedélyezett felhasználók ismernek.
+- Titkosított szöveg: Az egyszerű szöveg titkosítás utáni, olvashatatlan formája, amelyet csak a megfelelő kulcs birtokában lehet visszafejteni.
+- Visszafejtő algoritmus: Az algoritmus vagy eljárás, amelyet a titkosított szöveg visszafejtésére használnak a titkos kulcs használatával.
+    
+10. Magyarázza el az üzenetek hitelesítését és a hash-funkciókat
+Az üzenetek hitelesítése az a folyamat, amely során egy adott üzenet eredetét vagy integritását ellenőrzik. Ehhez hash-funkciókat használnak, amelyek olyan matematikai eljárások, amelyek bemeneti adatokból generálnak egy ún. hash-értéket vagy üzenetösszefoglalót. Az üzenet hitelesítésekor az eredeti üzenetet összehasonlítják a hozzá tartozó hash-értékkel. Ha az egyezik, akkor az üzenet integritása megerősíthető.
 
-```encrypt(text, key)``` függvény egy szöveget titkosít a fenti ```generateMapping(key)``` függvénnyel generált leképezés alapján. Lépések:
+11. Magyarázza el a nyilvános kulcsú titkosítást
+A nyilvános kulcsú titkosítás egy olyan kriptográfiai módszer, amely lehetővé teszi az adatok titkosítását és visszafejtését a nyilvános és a privát kulcsok használatával. Minden felhasználó rendelkezik egy párral nyilvános és privát kulcsokkal. A nyilvános kulcsot bárki ismerheti, míg a privát kulcs csak a kulcspárhoz tartozó felhasználó ismeri.
 
-1. Meghívja a ```generateMapping``` függvényt a megadott ```key```-el, hogy megkapja a karakterek leképezését
-2. A megadott szöveget karakterekre bontja, majd minden karaktert lecserél a leképezésben található megfelelőjére. Amennyiben egy karakter nem szerepel a leképezésben (pl. számjegy vagy speciális karakter), akkor azt változatlanul hagyja
-3. Az így kapott karaktereket összefűzi egy új szöveggé, ami lesz a titkosított üzenet
+12. Magyarázza el a digitális aláírásokat és a kulcskezelést
+A digitális aláírások olyan kriptográfiailag generált „pecsét”, amely az üzenet hitelességét és az üzenet küldőjének azonosságát igazolja. A digitális aláírást a küldő generálja saját privát kulcsával, és a címzett a küldő nyilvános kulcsát használva ellenőrzi annak valódiságát. Kulcskezelés során a kulcsok biztonságos tárolását, kezelését és megosztását jelenti. Fontos biztosítani, hogy a privát kulcsok csak a hitelesített felhasználók számára legyenek elérhetők, míg a nyilvános kulcsok szabadon elérhetők legyenek mások számára az üzenetek hitelesítéséhez és titkosításához.
 
-## Dekódolás
+13. Hogyan használható a nyilvános kulcsú titkosítás titkos kulcs terjesztésére?
+A nyilvános kulcsú titkosítást használhatjuk a titkos kulcsok terjesztésére a következő módon: Ha valaki titkosítani szeretne egy üzenetet egy másik félnek, használhatja az adott fél nyilvános kulcsát a titkosításra. Csak az adott fél privát kulcsával lehet visszafejteni az üzenetet, így a titkos kulcsokat nem kell közvetlenül megosztani.
 
-```decrypt(text, key)``` függvény egy korábban titkosított szöveget fejt vissza a ```generateMapping(key)``` függvény által generált leképezés használatával. Lépések:
+14. Magyarázza el a DES algoritmust
+DES (Data Encryption Standard) egy régebbi, blokk-alapú titkosítási algoritmus. 64-bites blokkokat és 56-bites kulcsokat használ, és többszörösen alkalmazza az algoritmust egy üzenet titkosításához. A DES biztonsága azonban mára már eléggé elavultnak számít, és sok modern titkosítási szabvány erősebb és hatékonyabb alternatívát kínál.
 
-1. Meghívja a ```generateMapping(key)``` függvényt a megadott ```key```-el, hogy megkapja a titkosításkor használt karakterek leképezését
+15. Magyarázza el az AES algoritmust
+AES (Advanced Encryption Standard) egy korszerű és széles körben elfogadott blokk-alapú titkosítási algoritmus. Az AES-t eredetileg a belga kriptográfusok, Joan Daemen és Vincent Rijmen tervezték. Az AES-t 128, 192 vagy 256 bites kulcsokkal lehet használni, és hatékonyan alkalmazható különböző környezetekben és alkalmazásokban. A titkosítás folyamata során az üzenetet blokkokra bontják, majd minden blokkot a kulccsal titkosítanak. Az AES biztonsága és hatékonysága miatt sok modern alkalmazásban és protokollban használják, például az SSL/TLS titkosításban és a WiFi hálózatokban.
 
-2. Létrehoz egy új, invertált leképezést ```invCharMap```, amely a titkosított betűket rendeli hozzá az eredeti betűkhöz
-    - Végigmegy a titkosítási leképezés kulcs-érték párokon (original, encrypted)
-    - Új leképezésben az ```encrypted``` betűket teszi meg kulcsként, míg az ```original``` betűket értékként
+16. Magyarázza el az MD5 algoritmust
+Az MD5 (Message Digest Algorithm 5) egy olyan hash-függvény, amelyet gyakran használnak az adatok hitelességének ellenőrzésére vagy rövidített, egyedi azonosítók létrehozására. Az MD5 algoritmus bemenetként egy tetszőleges hosszúságú üzenetet fogad el, és 128 bites üzenetösszefoglalót (hash-értéket) generál belőle. Az MD5 algoritmus hatékonyan működik, de biztonsági szempontból már elavultnak számít, mivel több súlyos sebezhetősége is ismert.
 
-3. Titkosított szöveget ```text``` karakterenként feldolgozza:
-    - Minden karaktert megpróbál leképezni az invertált leképezés segítségével az ```encrypted``` (titkosított) betűből vissza az ```original``` (eredeti) betűbe
-    - Amennyiben a karakter nem szerepel a leképezésben (pl. számjegyek vagy speciális karakterek, amelyek nem részei a titkosításnak), a karakter változatlan marad
-    - Az így visszafejtett karaktereket összefűzi, létrehozva ezzel a dekódolt szöveget
+17. Magyarázza meg az üzenet hitelesítési kódját
+Az üzenet hitelesítési kódja (Message Authentication Code, MAC) egy olyan kód, amelyet az adott üzenet hitelességének ellenőrzésére használnak. A MAC-t a küldő generálja az üzenet és egy titkos kulcs segítségével. A címzett a kapott üzenetet és a hozzá tartozó MAC-t használva ellenőrzi az üzenet valódiságát.
 
-## Feltörés
-```hack(text)```  függvény nem konkrét eltolási értékkel dekódol, hanem kipróbál minden lehetséges eltolást (1-től 25-ig, mivel a 26 eltolás már az eredeti szöveget adná vissza) a titkosított szöveg dekódolására. Lépések:
+18. Mik azok a rosszindulatú szoftverek? Milyen károkat okoznak? Milyen megelőző intézkedéseket javasol?
+A rosszindulatú szoftverek olyan programok vagy kódok, amelyeket azért hoznak létre, hogy kárt okozzanak vagy jogosulatlan hozzáférést szerezzenek egy számítógéphez vagy hálózathoz. Ezek a szoftverek lehetnek vírusok, férgek, trójaiak, kémprogramok stb. Károkat okozhatnak, mint például adatvesztés, adatlopás, rendszerleállás vagy akár pénzügyi károk is.
 
-1. Változóban eltárolja az angol ábécé kisbetűit
+Megelőző intézkedéseket javasolni:
 
-2. Tömbben gyűjti a lehetséges dekódolt szövegeket
+- Legyen telepítve és frissítve jó minőségű antivírus- és tűzfalvédelem.
+- Legyen rendszeres biztonsági mentés az adatokról.
+- Használjon erős jelszavakat és többlépcsős hitelesítési módszereket.
+- Legyen óvatos a gyanús e-mailekkel, letöltésekkel és weboldalakkal szemben.
+- Frissítse rendszerét és alkalmazásait rendszeresen.
 
-3. Végigmegy az összes lehetséges eltoláson (1-től 25-ig), és minden iterációban:
-    - Szétszedi a titkosított szöveget karakterekre
-    - Minden karakterre elvégzi az alábbi műveleteket:
-        - Ellenőrzi, hogy az adott karakter betű-e (figyelmen kívül hagyja a nem betű karaktereket)
-        - Ellenőrzi, hogy az adott karakter nagybetű-e
-        - Karaktert kisbetűvé alakítja, ha szükséges
-        - Megkeresi a karakter jelenlegi indexét az ábécében
-        - Kiszámítja az új indexet az eltolás figyelembevételével, az index értéke ne legyen negatív (a JavaScript modulo operátora negatív értéket is adhat)
-        - Új index alapján megkeresi a megfelelő karaktert az ábécében
-        - Karaktert nagybetűvé alakítja vissza, ha eredetileg is az volt
-- Módosított karaktereket összefűzi egy szöveggé
-- Hozzáadja a dekódolt szöveget a lehetséges dekódolt szövegek tömbjéhez
-- Kiírja a konzolra a dekódolt szöveget
+19. Magyarázza el a hálózati penetráció tesztelését
+A hálózati penetráció tesztelés (penetration testing vagy pen testing) egy olyan biztonsági tesztelési módszer, amely során a biztonsági szakértők megpróbálnak jogosulatlan hozzáférést szerezni egy adott hálózathoz vagy rendszerhez, hogy feltérképezzék a biztonsági sebezhetőségeket és kockázatokat. A tesztelés során a szakértők különböző módszereket és eszközöket használnak, például portszkennelést, sebezhetőségvizsgálatot, támadás szimulációt stb., hogy azonosítsák és kihasználják az esetleges sebezhetőségeket, majd ajánlásokat tesznek a biztonsági intézkedések megerősítésére.
 
-## Használat
-Elég egy böngésző (bármilyen), nyisd meg a DevTool-t (F12). Lépések:
-
-1. Másold a kódot DevTool-ba
-2. Kikommentelt részt vond vissza
-3. Futasd le
-
-[^1]: https://hu.wikipedia.org/wiki/Caesar-rejtjel
+20. Az alapvető biztonsági tervezési elvek meghatározása
+Az alapvető biztonsági tervezési elvek olyan alapelvek, amelyeket egy számítógépes rendszer, alkalmazás vagy hálózat tervezésekor figyelembe kell venni a biztonsági kockázatok csökkentése és a biztonsági szint növelése érdekében. Ezek a tervezési elvek magukban foglalhatják a legkisebb jogosultság elvét, az elválasztás elvét, a biztonság előtérbe helyezését a tervezési folyamatban, a rendszeres felügyeletet és a teljesség elvét.
